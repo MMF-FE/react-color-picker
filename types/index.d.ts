@@ -1,4 +1,5 @@
 import React from 'react';
+import { toColor as _toColor, Color as _Color } from 'react-color-palette';
 import type { ColorPickerProps } from 'react-color-palette/lib/interfaces/ColorPicker.interface';
 import 'react-color-palette/lib/css/styles.css';
 import 'react-linear-gradient-picker/dist/index.css';
@@ -14,6 +15,10 @@ export interface ColorVal {
         y2: number;
     };
 }
+export interface Color extends _Color {
+}
+export declare const ColorPicker: ({ width, height, color, onChange, onChangeComplete, hideHEX, hideRGB, hideHSV, alpha, dark, }: ColorPickerProps) => JSX.Element;
+export declare const toColor: typeof _toColor;
 export interface Props extends Omit<ColorPickerProps, 'onChange' | 'color' | 'onChangeComplete' | 'width'> {
     colors?: string[];
     offsets?: string[];

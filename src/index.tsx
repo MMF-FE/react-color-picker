@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import { ColorPicker, toColor, Color } from 'react-color-palette'
+import { ColorPicker as _ColorPicker, toColor as _toColor, Color as _Color } from 'react-color-palette'
 import type { ColorPickerProps } from 'react-color-palette/lib/interfaces/ColorPicker.interface'
 import {
-    GradientPicker,
-    AnglePicker,
-    getGradientPreview,
+    GradientPicker as _GradientPicker,
+    AnglePicker as _AnglePicker,
+    getGradientPreview as _getGradientPreview,
     // @ts-ignore
 } from 'react-linear-gradient-picker'
 import style from './style.module.css'
@@ -24,6 +24,14 @@ export interface ColorVal {
     }
 }
 
+export interface Color extends _Color {}
+
+// 对外发布组件
+export const ColorPicker = _ColorPicker
+export const toColor = _toColor
+export const GradientPicker = _GradientPicker
+export const AnglePicker = _AnglePicker
+export const getGradientPreview = _getGradientPreview
 export interface Props
     extends Omit<
         ColorPickerProps,
@@ -67,13 +75,13 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
         const inputColor = rest.color || '#2aaeff'
 
         const color = useMemo(() => {
-            const c = toColor(
+            const c = _toColor(
                 // @ts-ignore
                 inputColor.startsWith('#') ? 'hex' : 'rgb',
                 inputColor
             )
             // @ts-ignore
-            return toColor('rgb', {
+            return _toColor('rgb', {
                 ...c.rgb,
                 a: rest.opacity || c.rgb.a,
             })
@@ -113,7 +121,7 @@ const Component: React.FC<Props> = (props) => {
                 if (ix >= maxStops) {
                     return null
                 }
-                return toColor(
+                return _toColor(
                     // @ts-ignore
                     c.startsWith('#') ? 'hex' : 'rgb',
                     c
@@ -121,7 +129,7 @@ const Component: React.FC<Props> = (props) => {
             })
             .filter((v) => v)
 
-        return list as Color[]
+        return list as _Color[]
     }, [colors])
 
     const inputOffsets = useMemo(() => {
@@ -172,7 +180,7 @@ const Component: React.FC<Props> = (props) => {
 
         try {
             const p = palette.map((v) => {
-                const c = toColor('hex', v.color)
+                const c = _toColor('hex', v.color)
                 return {
                     ...v,
                     color: `rgba(${c.rgb.r},${c.rgb.g},${c.rgb.b},${
@@ -244,3 +252,4 @@ const Component: React.FC<Props> = (props) => {
 }
 
 export default React.memo(Component)
+
