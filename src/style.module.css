@@ -1,0 +1,40 @@
+/**
+ * @author huangrongfa
+ * @date 2021-12-06 09:58
+ * @since 0.0.0
+ */
+
+.angleHolder {
+    display: flex;
+    position: relative;
+    padding: 10px 0 0 10px;
+    margin: 0 5px;
+    border-top: 1px solid rgb(238, 238, 238);
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.angleInputs {
+    display: flex;
+    margin: 0 20px;
+    border-radius: 4px;
+    background: #f2f2f2;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.angleInputs input {
+    width: 48px;
+    border: none;
+    background: inherit;
+    color: #0c0c09;
+    text-align: center;
+}
+
+.angleInputs span {
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+}
