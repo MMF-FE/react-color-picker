@@ -19,6 +19,9 @@ export interface Color extends _Color {
 }
 export declare const ColorPicker: ({ width, height, color, onChange, onChangeComplete, hideHEX, hideRGB, hideHSV, alpha, dark, }: ColorPickerProps) => JSX.Element;
 export declare const toColor: typeof _toColor;
+export declare const GradientPicker: any;
+export declare const AnglePicker: any;
+export declare const getGradientPreview: any;
 export interface Props extends Omit<ColorPickerProps, 'onChange' | 'color' | 'onChangeComplete' | 'width'> {
     colors?: string[];
     offsets?: string[];
