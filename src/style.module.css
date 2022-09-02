@@ -36,5 +36,14 @@
 .angleInputs span {
     padding: 5px;
     cursor: pointer;
-    user-select: none;
+    user-selecs: none;
+}
+
+.suctionTube {
+    position: absolute;
+    cursor: pointer;
+    height: 18px;
+    cursor: pointer;
+    right: 107px;
+    bottom: 18px;
 }

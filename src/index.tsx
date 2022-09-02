@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useCallback } from 'react'
 import { ColorPicker as _ColorPicker, toColor as _toColor, Color as _Color } from 'react-color-palette'
 import type { ColorPickerProps } from 'react-color-palette/lib/interfaces/ColorPicker.interface'
 import {
@@ -10,6 +10,8 @@ import {
 import style from './style.module.css'
 import 'react-color-palette/lib/css/styles.css'
 import 'react-linear-gradient-picker/dist/index.css'
+
+const svgData = 'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjYyMDg1NTg3MjAyIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjIwMDEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTgzMi44NTMzMzMgMTkxLjE0NjY2N2E2Ni45ODY2NjcgNjYuOTg2NjY3IDAgMCAwLTk1LjE0NjY2NiAwTDY3My43MDY2NjcgMjU2IDYyMi45MzMzMzMgMjAzLjk0NjY2N2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwLTYwLjE2IDAgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAwIDYwLjE2bDI2LjQ1MzMzNCAyNi40NTMzMzMtMzIyLjEzMzMzNCAzMjIuMTMzMzMzTDI1NiA2ODYuNTA2NjY3bC02Ny40MTMzMzMgNjUuMjhhNTkuMzA2NjY3IDU5LjMwNjY2NyAwIDEgMCA4NS4zMzMzMzMgODUuMzMzMzMzbDY1LjI4LTY1LjI4IDczLjM4NjY2Ny0xMy4yMjY2NjcgMzIxLjcwNjY2Ni0zMjIuMTMzMzMzIDI2Ljg4IDI2LjQ1MzMzM2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwIDI5Ljg2NjY2NyAxMi4zNzMzMzQgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAzMC4yOTMzMzMtMTIuMzczMzM0IDQyLjY2NjY2NyA0Mi42NjY2NjcgMCAwIDAgMC02MC4xNkw3NjggMzQ5Ljg2NjY2N2w2My41NzMzMzMtNjMuNTczMzM0YTY2Ljk4NjY2NyA2Ni45ODY2NjcgMCAwIDAgMS4yOC05NS4xNDY2NjZ6IG0tMzA1LjQ5MzMzMyAzODkuMTJIMzYwLjEwNjY2N2wyNTkuNDEzMzMzLTI1OS40MTMzMzQgODUuMzMzMzMzIDg1LjMzMzMzNHoiIHAtaWQ9IjIwMDIiPjwvcGF0aD48L3N2Zz4='
 
 export interface ColorVal {
     colors: string[]
@@ -63,6 +65,15 @@ interface WrappedProps extends Omit<ColorPickerProps, 'color'> {
     onSelect: (color: string, alpha: number) => void
 }
 
+// @ts-ignore
+const hasEyeDropper = window['EyeDropper'] !== undefined
+
+let eyeDropper: any
+if (hasEyeDropper) {
+    // @ts-ignore
+    eyeDropper = new EyeDropper()
+}
+
 const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
     ({
         onSelect,
@@ -87,18 +98,33 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
             })
         }, [inputColor, rest.opacity])
 
+        const openEyeDropper = useCallback(async () => {
+            const res = await eyeDropper.open()
+            onSelect(res.sRGBHex, 1)
+        }, [eyeDropper, onSelect])
+
         return (
-            <ColorPicker
-                {...rest}
-                alpha={alpha}
-                hideRGB={hideRGB}
-                hideHSV={hideHSV}
-                width={width}
-                color={color}
-                onChange={(color) => {
-                    onSelect(color.hex, color.rgb.a || 1)
-                }}
-            />
+            <div style={{
+                position: 'relative'
+            }}>
+                <ColorPicker
+                    {...rest}
+                    alpha={alpha}
+                    hideRGB={hideRGB}
+                    hideHSV={hideHSV}
+                    width={width}
+                    color={color}
+                    onChange={(color) => {
+                        onSelect(color.hex, color.rgb.a || 1)
+                    }}
+                />
+                {hasEyeDropper && (
+                    <img
+                        onClick={openEyeDropper}
+                        className={style.suctionTube}
+                        src={`data:image/svg+xml;base64,${svgData}`} alt="" />
+                )}
+            </div>
         )
     }
 )
