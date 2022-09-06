@@ -34,7 +34,7 @@
 }
 
 .angleInputs span {
+    user-select: none;
     padding: 5px;
     cursor: pointer;
-    user-selecs: none;
 }
