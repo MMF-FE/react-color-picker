@@ -7,7 +7,7 @@ import { name, dependencies } from './package.json'
 export default defineConfig({
     plugins: [reactRefresh()],
     build: {
-        // cssCodeSplit: true,
+        cssCodeSplit: false,
         lib: {
             entry: path.resolve(__dirname, 'src/index.tsx'),
             name,
