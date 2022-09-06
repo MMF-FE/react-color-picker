@@ -1,8 +1,8 @@
+import 'react-color-palette/lib/css/styles.css';
+import 'react-linear-gradient-picker/dist/index.css';
 import React from 'react';
 import { toColor as _toColor, Color as _Color } from 'react-color-palette';
 import type { ColorPickerProps } from 'react-color-palette/lib/interfaces/ColorPicker.interface';
-import 'react-color-palette/lib/css/styles.css';
-import 'react-linear-gradient-picker/dist/index.css';
 export interface ColorVal {
     colors: string[];
     offsets: string[];
