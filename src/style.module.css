@@ -7,17 +7,11 @@
 .angleHolder {
     display: flex;
     position: relative;
-    padding: 10px 0 0 10px;
-    margin: 0 5px;
-    border-top: 1px solid rgb(238, 238, 238);
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
 .angleInputs {
     display: flex;
-    margin: 0 20px;
+    margin-left: 20px;
     border-radius: 4px;
     background: #f2f2f2;
     flex: 1;
@@ -26,7 +20,10 @@
 }
 
 .angleInputs input {
+    padding: 0;
     width: 48px;
+    height: 38px;
+    font-size: 16px;
     border: none;
     background: inherit;
     color: #0c0c09;
@@ -47,15 +44,67 @@
 }
 
 .angleInputs span {
+    line-height: 1;
+    font-size: 20px;
+    font-weight: 300;
     user-select: none;
-    padding: 5px;
     cursor: pointer;
 }
 
-.reactColorPicker :global(.rcp-saturation) {
+.multipleColorPickerLayout :global(.rcp-saturation) {
     border-radius: 8px;
 }
 
-.reactColorPicker :global(.rcp-fields-element) {
-    display: flex;
+.multipleColorPickerLayout :global(.rcp-fields-element) {
+    flex-direction: initial;
+    align-items: initial;
+    grid-gap: initial;
+    gap: initial;
+    width: initial;
+}
+
+.multipleColorPickerLayout :global(.rcp-body) {
+    padding: 20px 0;
+}
+
+.multipleColorPickerLayout :global(.rcp-fields-element-label) {
+    display: none;
+}
+
+.multipleColorPickerLayout :global(.rcp-fields-element-input) {
+    border: 1px solid #d2d5dc;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: initial;
+}
+
+.hasEyeDropper {
+    position: relative;
+}
+
+.hasEyeDropper :global(.rcp-fields-element-input) {
+    width: 80%;
+}
+
+.hasEyeDropper :global(.rcp-fields-element) {
+    justify-content: end;
+}
+
+.eyeDropper {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d2d5dc;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.eyeDropper img {
+    width: 60%;
+    height: 60%;
+    margin-left: 20%;
+    margin-top: 20%;
 }

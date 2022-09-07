@@ -14,10 +14,6 @@ import {
     // @ts-ignore
 } from 'react-linear-gradient-picker'
 import style from './style.module.css'
-
-const svgData =
-    'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjYyMDg1NTg3MjAyIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjIwMDEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTgzMi44NTMzMzMgMTkxLjE0NjY2N2E2Ni45ODY2NjcgNjYuOTg2NjY3IDAgMCAwLTk1LjE0NjY2NiAwTDY3My43MDY2NjcgMjU2IDYyMi45MzMzMzMgMjAzLjk0NjY2N2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwLTYwLjE2IDAgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAwIDYwLjE2bDI2LjQ1MzMzNCAyNi40NTMzMzMtMzIyLjEzMzMzNCAzMjIuMTMzMzMzTDI1NiA2ODYuNTA2NjY3bC02Ny40MTMzMzMgNjUuMjhhNTkuMzA2NjY3IDU5LjMwNjY2NyAwIDEgMCA4NS4zMzMzMzMgODUuMzMzMzMzbDY1LjI4LTY1LjI4IDczLjM4NjY2Ny0xMy4yMjY2NjcgMzIxLjcwNjY2Ni0zMjIuMTMzMzMzIDI2Ljg4IDI2LjQ1MzMzM2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwIDI5Ljg2NjY2NyAxMi4zNzMzMzQgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAzMC4yOTMzMzMtMTIuMzczMzM0IDQyLjY2NjY2NyA0Mi42NjY2NjcgMCAwIDAgMC02MC4xNkw3NjggMzQ5Ljg2NjY2N2w2My41NzMzMzMtNjMuNTczMzM0YTY2Ljk4NjY2NyA2Ni45ODY2NjcgMCAwIDAgMS4yOC05NS4xNDY2NjZ6IG0tMzA1LjQ5MzMzMyAzODkuMTJIMzYwLjEwNjY2N2wyNTkuNDEzMzMzLTI1OS40MTMzMzQgODUuMzMzMzMzIDg1LjMzMzMzNHoiIHAtaWQ9IjIwMDIiPjwvcGF0aD48L3N2Zz4='
-
 export interface ColorVal {
     colors: string[]
     offsets: string[]
@@ -110,9 +106,9 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
 
         return (
             <div
-                style={{
-                    position: 'relative',
-                }}
+                className={`${style.multipleColorPicker} ${
+                    hasEyeDropper ? style.hasEyeDropper : ''
+                }`}
             >
                 <ColorPicker
                     {...rest}
@@ -126,18 +122,14 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
                     }}
                 />
                 {hasEyeDropper && (
-                    <img
-                        onClick={openEyeDropper}
-                        style={{
-                            position: 'absolute',
-                            cursor: 'pointer',
-                            height: 18,
-                            right: 107,
-                            bottom: 18,
-                        }}
-                        src={`data:image/svg+xml;base64,${svgData}`}
-                        alt=""
-                    />
+                    <div className={style.eyeDropper} onClick={openEyeDropper}>
+                        <img
+                            src={
+                                'https://lite-static.meimeifa.com/yz/15b91342400b1064b845a36535a6a495.svg'
+                            }
+                            alt=""
+                        />
+                    </div>
                 )}
             </div>
         )
@@ -274,7 +266,7 @@ const Component: React.FC<Props> = (props) => {
             style={{
                 width,
             }}
-            className={style.reactColorPicker}
+            className={style.multipleColorPickerLayout}
         >
             <GradientPicker
                 {...{
@@ -292,7 +284,7 @@ const Component: React.FC<Props> = (props) => {
                 <WrappedColorPicker />
             </GradientPicker>
             <div className={style.angleHolder}>
-                <AnglePicker size={32} angle={angle} setAngle={setAngle} />
+                <AnglePicker size={40} angle={angle} setAngle={setAngle} />
                 <div className={style.angleInputs}>
                     <span onClick={() => setAngle(angle - 1)}>&#8722;</span>
                     <input
