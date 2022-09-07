@@ -201,6 +201,16 @@ const Component: React.FC<Props> = (props) => {
 
     const [palette, setPalette] = useState(inputPalette)
 
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const nextAngle = parseInt(event.target.value)
+
+        if (nextAngle >= 0 && nextAngle <= 360) {
+            setAngle(nextAngle)
+        } else {
+            setAngle(0)
+        }
+    }
+
     // 颜色改变处理
     useEffect(() => {
         if (maxStops === 1) {
@@ -284,7 +294,11 @@ const Component: React.FC<Props> = (props) => {
                 <AnglePicker size={32} angle={angle} setAngle={setAngle} />
                 <div className={style.angleInputs}>
                     <span onClick={() => setAngle(angle - 1)}>&#8722;</span>
-                    <input value={`${angle}°`} disabled />
+                    <input
+                        type="number"
+                        value={angle}
+                        onChange={handleInputChange}
+                    />
                     <span onClick={() => setAngle(angle + 1)}>&#43;</span>
                 </div>
             </div>

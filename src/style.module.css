@@ -33,6 +33,19 @@
     text-align: center;
 }
 
+.angleInputs input[type='number']::-webkit-inner-spin-button,
+.angleInputs input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.angleInputs input[type='number'] {
+    -moz-appearance: textfield;
+}
+.angleInputs input[type='number']:focus-visible {
+    outline: 0;
+}
+
 .angleInputs span {
     user-select: none;
     padding: 5px;
