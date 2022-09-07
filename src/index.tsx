@@ -274,6 +274,7 @@ const Component: React.FC<Props> = (props) => {
             style={{
                 width,
             }}
+            className={style.reactColorPicker}
         >
             <GradientPicker
                 {...{
