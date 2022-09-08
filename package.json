@@ -30,6 +30,7 @@
         "docs:build": "APP_ROOT=dumi dumi build"
     },
     "dependencies": {
+        "gradient-parser": "^1.0.2",
         "react": "^17.0.0",
         "react-color-palette": "^6.2.0",
         "react-dom": "^17.0.0",
@@ -38,6 +39,7 @@
     "devDependencies": {
         "@node-minify/clean-css": "^7.0.0",
         "@node-minify/core": "^7.0.0",
+        "@types/gradient-parser": "^0.1.2",
         "@types/node": "^14.14.33",
         "@types/node-fetch": "^2.5.8",
         "@types/react": "^17.0.0",
