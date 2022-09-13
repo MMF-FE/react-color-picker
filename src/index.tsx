@@ -240,7 +240,7 @@ const Component: React.FC<Props> = (props) => {
         }
     }
 
-    const handlegradientTextareaChange = (
+    const handleGradientTextareaChange = (
         event: React.ChangeEvent<HTMLTextAreaElement>
     ) => {
         try {
@@ -266,7 +266,7 @@ const Component: React.FC<Props> = (props) => {
                 })
             )
         } catch (err) {
-            console.log('try.catch.handlegradientTextareaChange.err: ', err)
+            console.log('try.catch.handleGradientTextareaChange.err: ', err)
         }
     }
 
@@ -346,7 +346,7 @@ const Component: React.FC<Props> = (props) => {
             <div className={style.textarea}>
                 <textarea
                     defaultValue={textarea || gradientRes?.background}
-                    onChange={handlegradientTextareaChange}
+                    onChange={handleGradientTextareaChange}
                 ></textarea>
             </div>
         </div>
