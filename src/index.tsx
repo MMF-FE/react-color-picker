@@ -13,22 +13,23 @@ import {
     getGradientPreview as _getGradientPreview,
     // @ts-ignore
 } from 'react-linear-gradient-picker'
+
+import gradient from 'gradient-parser'
 import style from './style.module.css'
 
-const svgData =
-    'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjYyMDg1NTg3MjAyIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjIwMDEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTgzMi44NTMzMzMgMTkxLjE0NjY2N2E2Ni45ODY2NjcgNjYuOTg2NjY3IDAgMCAwLTk1LjE0NjY2NiAwTDY3My43MDY2NjcgMjU2IDYyMi45MzMzMzMgMjAzLjk0NjY2N2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwLTYwLjE2IDAgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAwIDYwLjE2bDI2LjQ1MzMzNCAyNi40NTMzMzMtMzIyLjEzMzMzNCAzMjIuMTMzMzMzTDI1NiA2ODYuNTA2NjY3bC02Ny40MTMzMzMgNjUuMjhhNTkuMzA2NjY3IDU5LjMwNjY2NyAwIDEgMCA4NS4zMzMzMzMgODUuMzMzMzMzbDY1LjI4LTY1LjI4IDczLjM4NjY2Ny0xMy4yMjY2NjcgMzIxLjcwNjY2Ni0zMjIuMTMzMzMzIDI2Ljg4IDI2LjQ1MzMzM2E0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwIDI5Ljg2NjY2NyAxMi4zNzMzMzQgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAzMC4yOTMzMzMtMTIuMzczMzM0IDQyLjY2NjY2NyA0Mi42NjY2NjcgMCAwIDAgMC02MC4xNkw3NjggMzQ5Ljg2NjY2N2w2My41NzMzMzMtNjMuNTczMzM0YTY2Ljk4NjY2NyA2Ni45ODY2NjcgMCAwIDAgMS4yOC05NS4xNDY2NjZ6IG0tMzA1LjQ5MzMzMyAzODkuMTJIMzYwLjEwNjY2N2wyNTkuNDEzMzMzLTI1OS40MTMzMzQgODUuMzMzMzMzIDg1LjMzMzMzNHoiIHAtaWQ9IjIwMDIiPjwvcGF0aD48L3N2Zz4='
+export interface Gradient {
+    x1: number
+    x2: number
+    y1: number
+    y2: number
+}
 
 export interface ColorVal {
     colors: string[]
     offsets: string[]
     angle: number
     background: string
-    gradient: {
-        x1: number
-        x2: number
-        y1: number
-        y2: number
-    }
+    gradient: Gradient
 }
 
 export interface Color extends _Color {}
@@ -79,6 +80,13 @@ if (hasEyeDropper) {
     eyeDropper = new EyeDropper()
 }
 
+const defaultGradient: Gradient = {
+    x1: 0,
+    x2: 1,
+    y1: 0,
+    y2: 0,
+}
+
 const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
     ({
         onSelect,
@@ -110,9 +118,9 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
 
         return (
             <div
-                style={{
-                    position: 'relative',
-                }}
+                className={`${style.multipleColorPicker} ${
+                    hasEyeDropper ? style.hasEyeDropper : ''
+                }`}
             >
                 <ColorPicker
                     {...rest}
@@ -126,18 +134,14 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
                     }}
                 />
                 {hasEyeDropper && (
-                    <img
-                        onClick={openEyeDropper}
-                        style={{
-                            position: 'absolute',
-                            cursor: 'pointer',
-                            height: 18,
-                            right: 107,
-                            bottom: 18,
-                        }}
-                        src={`data:image/svg+xml;base64,${svgData}`}
-                        alt=""
-                    />
+                    <div className={style.eyeDropper} onClick={openEyeDropper}>
+                        <img
+                            src={
+                                'https://lite-static.meimeifa.com/yz/15b91342400b1064b845a36535a6a495.svg'
+                            }
+                            alt=""
+                        />
+                    </div>
                 )}
             </div>
         )
@@ -155,6 +159,7 @@ const Component: React.FC<Props> = (props) => {
     } = props
 
     const [angle, setAngle] = useState(props.angle || 90)
+    const [textarea, setTextarea] = useState('')
 
     const inputColors = useMemo(() => {
         const list = colors
@@ -201,24 +206,7 @@ const Component: React.FC<Props> = (props) => {
 
     const [palette, setPalette] = useState(inputPalette)
 
-    // 颜色改变处理
-    useEffect(() => {
-        if (maxStops === 1) {
-            onChange({
-                colors: pickerColors.map((v) => v.hex),
-                offsets: ['0'],
-                background: pickerColors[0].hex,
-                angle,
-                gradient: {
-                    x1: 0,
-                    x2: 1,
-                    y1: 0,
-                    y2: 0,
-                },
-            })
-            return
-        }
-
+    const gradientRes = useMemo(() => {
         try {
             const p = palette.map((v) => {
                 const c = _toColor('hex', v.color)
@@ -231,17 +219,78 @@ const Component: React.FC<Props> = (props) => {
             })
             const res = getGradientPreview(p, angle)
 
-            onChange({
-                colors: palette.map((c) => c.color),
-                offsets: palette.map((p) => p.offset),
-                angle,
-                background: res.background,
-                gradient: res.gradient,
-            })
-        } catch (error) {
-            console.log(error)
+            return res as {
+                background: string
+                gradient: Gradient
+            }
+        } catch (err) {
+            console.log('try.catch.getGradientPreview.err: ', err)
         }
-    }, [palette, onChange, angle, maxStops, pickerColors])
+    }, [palette, angle])
+
+    const handleAngleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const nextAngle = parseInt(event.target.value)
+
+        if (nextAngle >= 0 && nextAngle <= 360) {
+            setAngle(nextAngle)
+        } else {
+            setAngle(0)
+        }
+    }
+
+    const handleGradientTextareaChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+        try {
+            const res = gradient.parse(event.target.value)[0]
+            setTextarea(event.target.value)
+            // @ts-ignore
+            setAngle(Math.floor(res?.orientation?.value || 0))
+
+            setPalette(
+                res.colorStops.map((v) => {
+                    const c = _toColor('rgb', {
+                        r: Number(v.value[0]),
+                        g: Number(v.value[1]),
+                        b: Number(v.value[2]),
+                        a: Number(v.value[3]),
+                    })
+                    return {
+                        offset:
+                            String(Number(v?.length?.value || 0) / 100) || '0',
+                        color: c.hex,
+                        opacity: Number(v.value[3] || 0),
+                    }
+                })
+            )
+        } catch (err) {
+            console.log('try.catch.handleGradientTextareaChange.err: ', err)
+        }
+    }
+
+    // 颜色改变处理
+    useEffect(() => {
+        if (maxStops === 1) {
+            onChange({
+                colors: pickerColors.map((v) => v.hex),
+                offsets: ['0'],
+                background: pickerColors[0].hex,
+                angle,
+                gradient: defaultGradient,
+            })
+            return
+        }
+
+        onChange({
+            colors: palette.map((c) => c.color),
+            offsets: palette.map((p) => p.offset),
+            angle,
+            background: gradientRes?.background || '',
+            gradient: gradientRes?.gradient || defaultGradient,
+        })
+    }, [palette, onChange, angle, maxStops, pickerColors, gradientRes])
 
     useEffect(() => {
         setPickerColors(inputColors)
@@ -264,6 +313,7 @@ const Component: React.FC<Props> = (props) => {
             style={{
                 width,
             }}
+            className={style.multipleColorPickerLayout}
         >
             <GradientPicker
                 {...{
@@ -281,12 +331,23 @@ const Component: React.FC<Props> = (props) => {
                 <WrappedColorPicker />
             </GradientPicker>
             <div className={style.angleHolder}>
-                <AnglePicker size={32} angle={angle} setAngle={setAngle} />
+                <AnglePicker size={40} angle={angle} setAngle={setAngle} />
                 <div className={style.angleInputs}>
                     <span onClick={() => setAngle(angle - 1)}>&#8722;</span>
-                    <input value={`${angle}°`} disabled />
+                    <input
+                        type="number"
+                        value={angle}
+                        onChange={handleAngleInputChange}
+                    />
                     <span onClick={() => setAngle(angle + 1)}>&#43;</span>
                 </div>
+            </div>
+
+            <div className={style.textarea}>
+                <textarea
+                    defaultValue={textarea || gradientRes?.background}
+                    onChange={handleGradientTextareaChange}
+                ></textarea>
             </div>
         </div>
     )
