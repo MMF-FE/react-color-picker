@@ -243,47 +243,44 @@ const Component: React.FC<Props> = (props) => {
         }
     }
 
-    const handleEdit = () => {
-        setEdit(true)
+    const handleCopy = () => {
+        const el = document.getElementById('gradient-textarea')
+        // @ts-ignore
+        el.select()
+        document.execCommand('copy')
     }
+
+    const handleEdit = useCallback(() => {
+        setEdit(true)
+        setTextarea(gradientRes?.background || '')
+    }, [gradientRes?.background])
 
     const handleCancel = () => {
         setEdit(false)
     }
 
-    const handleSave = () => {
-        setEdit(false)
-    }
+    const handleSave = useCallback(() => {
+        const res = gradient.parse(textarea)[0]
+        // @ts-ignore
+        setAngle(Math.floor(res?.orientation?.value || 0))
 
-    const handleGradientTextareaChange = (
-        event: React.ChangeEvent<HTMLTextAreaElement>
-    ) => {
-        try {
-            const res = gradient.parse(event.target.value)[0]
-            setTextarea(event.target.value)
-            // @ts-ignore
-            setAngle(Math.floor(res?.orientation?.value || 0))
-
-            setPalette(
-                res.colorStops.map((v) => {
-                    const c = _toColor('rgb', {
-                        r: Number(v.value[0]),
-                        g: Number(v.value[1]),
-                        b: Number(v.value[2]),
-                        a: Number(v.value[3]),
-                    })
-                    return {
-                        offset:
-                            String(Number(v?.length?.value || 0) / 100) || '0',
-                        color: c.hex,
-                        opacity: Number(v.value[3] || 0),
-                    }
+        setPalette(
+            res.colorStops.map((v) => {
+                const c = _toColor('rgb', {
+                    r: Number(v.value[0]),
+                    g: Number(v.value[1]),
+                    b: Number(v.value[2]),
+                    a: Number(v.value[3]),
                 })
-            )
-        } catch (err) {
-            console.log('try.catch.handleGradientTextareaChange.err: ', err)
-        }
-    }
+                return {
+                    offset: String(Number(v?.length?.value || 0) / 100) || '0',
+                    color: c.hex,
+                    opacity: Number(Number(v.value[3] || 0).toFixed(1)),
+                }
+            })
+        )
+        setEdit(false)
+    }, [textarea])
 
     // 颜色改变处理
     useEffect(() => {
@@ -359,12 +356,17 @@ const Component: React.FC<Props> = (props) => {
             </div>
 
             <div className={style.textarea}>
-                <textarea readOnly={!edit}></textarea>
+                <textarea
+                    id="gradient-textarea"
+                    readOnly={!edit}
+                    value={edit ? textarea : gradientRes?.background}
+                    onChange={(e) => setTextarea(e.target.value)}
+                ></textarea>
             </div>
 
             {!edit && (
                 <div className={style.actions}>
-                    <div className={style.item}>
+                    <div className={style.item} onClick={handleCopy}>
                         <img
                             className={style.icon}
                             style={{ width: 19, height: 19 }}
