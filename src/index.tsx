@@ -158,6 +158,9 @@ const Component: React.FC<Props> = (props) => {
         onChange = () => {},
     } = props
 
+    // 是否编辑
+    const [edit, setEdit] = useState(false)
+
     const [angle, setAngle] = useState(props.angle || 90)
     const [textarea, setTextarea] = useState('')
 
@@ -238,6 +241,18 @@ const Component: React.FC<Props> = (props) => {
         } else {
             setAngle(0)
         }
+    }
+
+    const handleEdit = () => {
+        setEdit(true)
+    }
+
+    const handleCancel = () => {
+        setEdit(false)
+    }
+
+    const handleSave = () => {
+        setEdit(false)
     }
 
     const handleGradientTextareaChange = (
@@ -344,11 +359,46 @@ const Component: React.FC<Props> = (props) => {
             </div>
 
             <div className={style.textarea}>
-                <textarea
-                    defaultValue={textarea || gradientRes?.background}
-                    onChange={handleGradientTextareaChange}
-                ></textarea>
+                <textarea readOnly={!edit}></textarea>
             </div>
+
+            {!edit && (
+                <div className={style.actions}>
+                    <div className={style.item}>
+                        <img
+                            className={style.icon}
+                            style={{ width: 19, height: 19 }}
+                            src="https://lite-static.meimeifa.com/yz/ba092573635f1a7f4f963403c33fbd7b.svg"
+                            alt=""
+                        />
+                        复制样式
+                    </div>
+                    <div className={style.line}></div>
+                    <div className={style.item} onClick={handleEdit}>
+                        <img
+                            className={style.icon}
+                            style={{ width: 18, height: 18 }}
+                            src="https://lite-static.meimeifa.com/yz/ef8af42ecf712c1669fb169501988a99.svg"
+                            alt=""
+                        />
+                        编辑样式
+                    </div>
+                </div>
+            )}
+            {edit && (
+                <div className={style.actions}>
+                    <div className={style.btn} onClick={handleCancel}>
+                        取消
+                    </div>
+                    <div className={style.line} style={{ opacity: 0 }}></div>
+                    <div
+                        className={`${style.btn} ${style.active}`}
+                        onClick={handleSave}
+                    >
+                        保存
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
