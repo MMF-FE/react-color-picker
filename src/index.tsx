@@ -35,7 +35,32 @@ export interface ColorVal {
 export interface Color extends _Color {}
 
 // 对外发布组件
-export const ColorPicker = _ColorPicker
+export const ColorPicker = (props: ColorPickerProps) => {
+    const openEyeDropper = useCallback(async () => {
+        const res = await eyeDropper.open()
+        const nextColor = _toColor('hex', res.sRGBHex)
+        props.onChange(nextColor)
+    }, [eyeDropper, props.onChange])
+
+    return (
+        <div className={style.colorPicker}>
+            <_ColorPicker {...props}></_ColorPicker>
+            {hasEyeDropper && (
+                <div
+                    className={style.colorPickerDropper}
+                    onClick={openEyeDropper}
+                >
+                    <img
+                        src={
+                            'https://lite-static.meimeifa.com/yz/15b91342400b1064b845a36535a6a495.svg'
+                        }
+                        alt=""
+                    />
+                </div>
+            )}
+        </div>
+    )
+}
 export const toColor = _toColor
 export const GradientPicker = _GradientPicker
 export const AnglePicker = _AnglePicker
@@ -122,7 +147,7 @@ const WrappedColorPicker: React.FC<WrappedProps> = React.memo(
                     hasEyeDropper ? style.hasEyeDropper : ''
                 }`}
             >
-                <ColorPicker
+                <_ColorPicker
                     {...rest}
                     alpha={alpha}
                     hideRGB={hideRGB}
