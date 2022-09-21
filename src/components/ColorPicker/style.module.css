@@ -1,0 +1,6 @@
+.colorPicker {
+    /* color: red; */
+}
+.colorPicker :global(.sketch-picker) {
+    /* box-shadow: none; */
+}

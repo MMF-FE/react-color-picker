@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { ColorPicker, GradientColorPicker } from '../../src'
+import { ColorPicker, GradientColorPicker, Color } from '../../src'
 
 export default () => {
     const [background, setBackground] = useState('#ffffff')
 
-    // const [color, setColor] = useState(toColor('hex', '#af7e7e'))
+    const [color, setColor] = useState<Color>()
 
     return (
         <div style={{ display: 'flex' }}>
@@ -19,10 +19,14 @@ export default () => {
                     }}
                 ></div>
                 <GradientColorPicker
-                // colors={['#2aaeffa7', '#e600ef8f']}
-                // offsets={['0', '0.7']}
-                // angle={150}
-                // onChange={(res) => setBackground(res.background)}
+                    palette={[
+                        { color: 'rgb(255, 255, 255)', offset: 0 },
+                        { color: 'rgb(0, 0, 0)', offset: 100 },
+                    ]}
+                    // colors={['#2aaeffa7', '#e600ef8f']}
+                    // offsets={['0', '0.7']}
+                    // angle={150}
+                    // onChange={(res) => setBackground(res.background)}
                 />
             </div>
 
@@ -36,7 +40,12 @@ export default () => {
                         // background: color.hex,
                     }}
                 ></div>
-                <ColorPicker />
+                <ColorPicker
+                    color={color}
+                    onChange={(val) => {
+                        setColor(val.rgb)
+                    }}
+                />
             </div>
         </div>
     )

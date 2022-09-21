@@ -1,0 +1,16 @@
+.eyeDropper {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d2d5dc;
+    border-radius: 5px;
+    bottom: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.eyeDropper img {
+    width: 60%;
+    height: 60%;
+    margin-left: 20%;
+    margin-top: 20%;
+}
