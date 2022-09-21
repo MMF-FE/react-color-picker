@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import MyComponent, { ColorPicker, toColor } from '../../src'
+import { ColorPicker, GradientColorPicker } from '../../src'
 
 export default () => {
     const [background, setBackground] = useState('#ffffff')
 
-    const [color, setColor] = useState(toColor('hex', '#af7e7e'))
+    // const [color, setColor] = useState(toColor('hex', '#af7e7e'))
 
     return (
         <div style={{ display: 'flex' }}>
@@ -18,11 +18,11 @@ export default () => {
                         background,
                     }}
                 ></div>
-                <MyComponent
-                    colors={['#2aaeffa7', '#e600ef8f']}
-                    offsets={['0', '0.7']}
-                    angle={150}
-                    onChange={(res) => setBackground(res.background)}
+                <GradientColorPicker
+                // colors={['#2aaeffa7', '#e600ef8f']}
+                // offsets={['0', '0.7']}
+                // angle={150}
+                // onChange={(res) => setBackground(res.background)}
                 />
             </div>
 
@@ -33,10 +33,10 @@ export default () => {
                         height: 30,
                         marginBottom: 50,
                         borderRadius: 5,
-                        background: color.hex,
+                        // background: color.hex,
                     }}
                 ></div>
-                <ColorPicker width={300} color={color} onChange={setColor} />
+                <ColorPicker />
             </div>
         </div>
     )
