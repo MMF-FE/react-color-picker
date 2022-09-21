@@ -8,7 +8,7 @@ import {
 } from '../../src'
 
 export default () => {
-    const [color, setColor] = useState('#ffffff')
+    const [color, setColor] = useState('rgb(255, 0, 0)')
 
     const [palette, setPalette] = useState<PaletteColor[]>([
         { offset: 0, color: '#000' },
@@ -57,6 +57,7 @@ export default () => {
                 <ColorPicker
                     color={color}
                     onChange={(val) => {
+                        console.log(val)
                         setColor(val.color)
                     }}
                 />
