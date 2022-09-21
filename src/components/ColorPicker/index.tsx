@@ -12,11 +12,16 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     return (
         <div>
             <Panel
+                {...props}
                 onChange={(val) => {
-                    console.log(val)
+                    props.onChange?.(val)
                 }}
             ></Panel>
-            <EyeDropper></EyeDropper>
+            <EyeDropper
+                onPick={(val) => {
+                    props.onChange?.({ color: val, alpha: 1 })
+                }}
+            ></EyeDropper>
         </div>
     )
 }

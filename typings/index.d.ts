@@ -1,6 +1,10 @@
 declare module '*.css'
 
 declare module 'rc-color-picker' {
+    export interface Color {
+        color: string
+        alpha: number
+    }
     export interface PanelProps {
         // 透明度 默认值100
         alpha?: number
@@ -19,7 +23,7 @@ declare module 'rc-color-picker' {
         // 失去焦点时触发
         onBlur?: () => void
         // 颜色改变时触发
-        onChange?: () => void
+        onChange?: (color: Color) => void
         // 聚焦时触发
         onFocus?: () => void
         // 样式
@@ -45,7 +49,7 @@ declare module 'react-linear-gradient-picker' {
         // 渐变色数组
         palette: PaletteColor[]
         // 改变时触发
-        onPaletteChange: () => void
+        onPaletteChange: (palette: PaletteColor[]) => void
         // 高度 默认值32
         paletteHeight?: number
         // 宽度 默认值400
@@ -58,5 +62,27 @@ declare module 'react-linear-gradient-picker' {
         minStops?: number
     }
 
+    export interface AnglePickerProps {
+        // 角度
+        angle: number
+        // 修改角度
+        setAngle: (angle: number) => void
+        // 大小 默认值48
+        size?: number
+        // 变化幅度 默认值5
+        snap?: number
+    }
+
+    const AnglePicker: React.FC<AnglePickerProps>
+
     const GradientPicker: React.FC<GradientPickerProps>
+
+    const getGradientPreview: (
+        palette: PaletteColor[],
+        angle: number
+    ) => {
+        gradient: string
+        background: string
+        angle: string
+    }
 }

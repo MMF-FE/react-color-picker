@@ -3736,6 +3736,11 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+linear-gradient-parser@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/linear-gradient-parser/-/linear-gradient-parser-1.1.8.tgz#a226445b023863c93411c6f889a7f0c065dce06a"
+  integrity sha512-p7kv4dH4uQf0eO7EeULcE7+xgViS/kHIdsQaah3T4TxGfAWvZR7TX5kkZu2zHyhXlWTLLP6mUwm2fKlD61n7Ag==
+
 loader-utils@^1.1.0:
   version "1.4.0"
   resolved "https://repo.huaweicloud.com/repository/npm/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
@@ -5228,10 +5233,12 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-linear-gradient-picker@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-linear-gradient-picker/-/react-linear-gradient-picker-3.0.1.tgz#156654d24b5eddc37c857851bf4be8fa4363a3c6"
-  integrity sha512-Y76ScvY0n+6wP+6gfRveTgqf8+w3jCQcYjm7NYNQvUSkoE6HYztyQMqvNgVABiHYmOJYy5F4Zd4lED0lIEBcRw==
+react-linear-gradient-picker@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-linear-gradient-picker/-/react-linear-gradient-picker-2.0.6.tgz#9954ad5066711d48601a718048ced88093bb9bfc"
+  integrity sha512-cOB7pg+M3qkTcZeJhq7K6b2CMqfKvECa2RhsWMNIa3xxxdvvhDhgH+NxLNaz1b8UqC+gViMorg4A7f87vbTGpg==
+  dependencies:
+    linear-gradient-parser "^1.1.8"
 
 react-refresh@0.9.0, react-refresh@^0.9.0:
   version "0.9.0"

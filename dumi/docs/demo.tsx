@@ -1,10 +1,26 @@
 import React, { useState } from 'react'
-import { ColorPicker, GradientColorPicker, Color } from '../../src'
+import { useMemo } from 'react'
+import {
+    ColorPicker,
+    GradientColorPicker,
+    PaletteColor,
+    getGradientPreview,
+} from '../../src'
 
 export default () => {
-    const [background, setBackground] = useState('#ffffff')
+    const [color, setColor] = useState('#ffffff')
 
-    const [color, setColor] = useState<Color>()
+    const [palette, setPalette] = useState<PaletteColor[]>([
+        { offset: 0, color: '#000' },
+        { offset: 0.4, color: '#555' },
+        { offset: 1, color: '#999' },
+    ])
+
+    const [angle, setAngle] = useState(0)
+
+    const gradientPreview = useMemo(() => {
+        return getGradientPreview(palette, angle)
+    }, [palette, angle])
 
     return (
         <div style={{ display: 'flex' }}>
@@ -15,18 +31,16 @@ export default () => {
                         height: 30,
                         marginBottom: 50,
                         borderRadius: 5,
-                        background,
+                        background: gradientPreview.background,
                     }}
                 ></div>
                 <GradientColorPicker
-                    palette={[
-                        { color: 'rgb(255, 255, 255)', offset: 0 },
-                        { color: 'rgb(0, 0, 0)', offset: 100 },
-                    ]}
-                    // colors={['#2aaeffa7', '#e600ef8f']}
-                    // offsets={['0', '0.7']}
-                    // angle={150}
-                    // onChange={(res) => setBackground(res.background)}
+                    palette={palette}
+                    onPaletteChange={(val) => {
+                        setPalette(val)
+                    }}
+                    angle={angle}
+                    onAngleChange={setAngle}
                 />
             </div>
 
@@ -37,13 +51,13 @@ export default () => {
                         height: 30,
                         marginBottom: 50,
                         borderRadius: 5,
-                        // background: color.hex,
+                        background: color,
                     }}
                 ></div>
                 <ColorPicker
                     color={color}
                     onChange={(val) => {
-                        setColor(val.rgb)
+                        setColor(val.color)
                     }}
                 />
             </div>

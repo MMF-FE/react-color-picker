@@ -1,21 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     AnglePicker,
     GradientPicker,
     GradientPickerProps,
 } from 'react-linear-gradient-picker'
+import 'react-linear-gradient-picker/'
 import 'react-linear-gradient-picker/dist/index.css'
 import ColorPicker from '../ColorPicker'
 
-interface GradientColorPickerProps extends GradientPickerProps {}
+export interface GradientColorPickerProps extends GradientPickerProps {
+    // 角度
+    angle: number
+    // 角度改变
+    onAngleChange: (val: number) => void
+}
 
-const WrappedColorPicker = ({ onSelect, ...rest }) => {
-    console.log('rest', rest)
+export interface WrappedColorPickerProps {
+    onSelect: (color: string, alpha: number) => void
+}
+
+const WrappedColorPicker: React.FC<WrappedColorPickerProps> = ({
+    onSelect,
+    ...rest
+}) => {
     return (
         <ColorPicker
             {...rest}
             onChange={(val) => {
-                console.log(val)
                 onSelect(val.color, val.alpha / 100)
             }}
         />
@@ -23,12 +34,15 @@ const WrappedColorPicker = ({ onSelect, ...rest }) => {
 }
 
 const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
+    const { angle, onAngleChange, ...rest } = props
+
     return (
         <div>
             <GradientPicker {...props}>
+                {/* @ts-ignore */}
                 <WrappedColorPicker></WrappedColorPicker>
-                <AnglePicker></AnglePicker>
             </GradientPicker>
+            <AnglePicker angle={angle} setAngle={onAngleChange}></AnglePicker>
         </div>
     )
 }

@@ -2,5 +2,8 @@
 
 import ColorPicker from './components/ColorPicker'
 import GradientColorPicker from './components/GradientColorPicker'
+import { PaletteColor, getGradientPreview } from 'react-linear-gradient-picker'
 
-export { ColorPicker, GradientColorPicker }
+export type { PaletteColor }
+
+export { ColorPicker, GradientColorPicker, getGradientPreview }
