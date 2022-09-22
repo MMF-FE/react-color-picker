@@ -9,7 +9,7 @@ import {
 } from '../../src'
 
 export default () => {
-    const [color, setColor] = useState('rgba(255, 0, 0, 1)')
+    const [color, setColor] = useState({ color: '#555', alpha: 100 })
 
     const [palette, setPalette] = useState<PaletteColor[]>([
         { offset: 0, color: '#000' },
@@ -23,46 +23,43 @@ export default () => {
         return getGradientPreview(palette, angle)
     }, [palette, angle])
 
+    const bgColor = useMemo(() => {
+        return Color(color.color)
+            .alpha(color.alpha / 100)
+            .toString()
+    }, [color])
+
+    const renderBackground = (bg: string) => (
+        <div
+            style={{
+                width: 120,
+                height: 30,
+                marginBottom: 50,
+                borderRadius: 5,
+                background: bg,
+            }}
+        ></div>
+    )
+
     return (
         <div style={{ display: 'flex' }}>
             <div>
-                <div
-                    style={{
-                        width: 120,
-                        height: 30,
-                        marginBottom: 50,
-                        borderRadius: 5,
-                        background: gradientPreview.background,
-                    }}
-                ></div>
+                {renderBackground(gradientPreview.background)}
+
                 <GradientColorPicker
                     palette={palette}
-                    onPaletteChange={(val) => {
-                        setPalette(val)
-                    }}
+                    onPaletteChange={setPalette}
                     angle={angle}
                     onAngleChange={setAngle}
                 />
             </div>
 
             <div style={{ marginLeft: 50 }}>
-                <div
-                    style={{
-                        width: 120,
-                        height: 30,
-                        marginBottom: 50,
-                        borderRadius: 5,
-                        background: color,
-                    }}
-                ></div>
+                {renderBackground(bgColor)}
                 <ColorPicker
-                    color={color}
-                    onChange={(val) => {
-                        const nextColor = Color(val.color)
-                            .alpha(val.alpha / 100)
-                            .string()
-                        setColor(nextColor)
-                    }}
+                    color={color.color}
+                    alpha={color.alpha}
+                    onChange={setColor}
                 />
             </div>
         </div>

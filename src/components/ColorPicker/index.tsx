@@ -19,7 +19,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             ></Panel>
             <EyeDropper
                 onPick={(val) => {
-                    props.onChange?.({ color: val, alpha: 1 })
+                    console.log(props)
+                    props.onChange?.({ color: val, alpha: props.alpha || 100 })
                 }}
             ></EyeDropper>
         </div>
