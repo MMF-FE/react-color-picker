@@ -58,21 +58,21 @@ const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
         return getGradientPreview(palette, angle)
     }, [palette, angle])
 
-    const handleCopy = () => {
+    const handleCopy = useCallback(() => {
         const el = document.getElementById('gradient-textarea')
         // @ts-ignore
         el.select()
         document.execCommand('copy')
-    }
+    }, [])
 
     const handleEdit = useCallback(() => {
         setEdit(true)
         setTextarea(gradientPreview.background || '')
     }, [gradientPreview.background])
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         setEdit(false)
-    }
+    }, [])
 
     const handleSave = useCallback(() => {
         const res = gradient.parse(textarea)[0]
@@ -102,13 +102,40 @@ const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
         setEdit(false)
     }, [textarea])
 
+    const handleAngleInputChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const nextAngle = parseInt(event.target.value)
+
+            if (nextAngle >= 0 && nextAngle <= 360) {
+                onAngleChange(nextAngle)
+            } else {
+                onAngleChange(0)
+            }
+        },
+        []
+    )
+
     return (
         <div>
             <GradientPicker {...props}>
                 {/* @ts-ignore */}
                 <WrappedColorPicker></WrappedColorPicker>
             </GradientPicker>
-            <AnglePicker angle={angle} setAngle={onAngleChange}></AnglePicker>
+
+            <div className={styles.angleHolder}>
+                <AnglePicker size={40} angle={angle} setAngle={onAngleChange} />
+                <div className={styles.angleInputs}>
+                    <span onClick={() => onAngleChange(angle - 1)}>
+                        &#8722;
+                    </span>
+                    <input
+                        type="number"
+                        value={angle}
+                        onChange={handleAngleInputChange}
+                    />
+                    <span onClick={() => onAngleChange(angle + 1)}>&#43;</span>
+                </div>
+            </div>
 
             <div className={styles.textarea}>
                 <textarea

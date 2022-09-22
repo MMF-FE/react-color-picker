@@ -1,3 +1,50 @@
+.angleHolder {
+    display: flex;
+    position: relative;
+}
+
+.angleInputs {
+    display: flex;
+    margin-left: 20px;
+    border-radius: 4px;
+    background: #f2f2f2;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.angleInputs input {
+    padding: 0;
+    width: 48px;
+    height: 38px;
+    font-size: 16px;
+    border: none;
+    background: inherit;
+    color: #0c0c09;
+    text-align: center;
+}
+
+.angleInputs input[type='number']::-webkit-inner-spin-button,
+.angleInputs input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.angleInputs input[type='number'] {
+    -moz-appearance: textfield;
+}
+.angleInputs input[type='number']:focus-visible {
+    outline: 0;
+}
+
+.angleInputs span {
+    line-height: 1;
+    font-size: 20px;
+    font-weight: 300;
+    user-select: none;
+    cursor: pointer;
+}
+
 .textarea {
     background-color: #f2f2f2;
     padding: 10px;
