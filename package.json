@@ -35,11 +35,8 @@
         "gradient-parser": "^1.0.2",
         "rc-color-picker": "^1.2.6",
         "react": "^17.0.0",
-        "react-color": "^2.19.3",
-        "react-color-palette": "^6.2.0",
         "react-dom": "^17.0.0",
-        "react-linear-gradient-picker": "^2.0.6",
-        "vite-plugin-legacy": "^2.1.0"
+        "react-linear-gradient-picker": "^2.0.6"
     },
     "devDependencies": {
         "@node-minify/clean-css": "^7.0.0",

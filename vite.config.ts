@@ -9,6 +9,7 @@ import { name, dependencies } from './package.json'
 export default defineConfig({
     plugins: [
         reactRefresh(),
+        // @ts-ignore
         libInjectCss(),
         legacy({
             targets: ['defaults', 'not IE 11'],
@@ -26,7 +27,10 @@ export default defineConfig({
             external: [...Object.keys(dependencies)].filter(
                 (v) =>
                     ![
-                        'react-color-palette',
+                        'classnames',
+                        'color',
+                        'gradient-parser',
+                        'rc-color-picker',
                         'react-linear-gradient-picker',
                     ].includes(v)
             ),
