@@ -34,6 +34,8 @@ declare module 'rc-color-picker' {
 }
 
 declare module 'react-linear-gradient-picker' {
+    import ColorClass from 'color'
+
     export interface PaletteColor {
         // 颜色
         color: string
@@ -85,4 +87,6 @@ declare module 'react-linear-gradient-picker' {
         background: string
         angle: string
     }
+
+    const Color: ColorClass
 }

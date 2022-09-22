@@ -5,10 +5,11 @@ import {
     GradientColorPicker,
     PaletteColor,
     getGradientPreview,
+    Color,
 } from '../../src'
 
 export default () => {
-    const [color, setColor] = useState('rgb(255, 0, 0)')
+    const [color, setColor] = useState('rgba(255, 0, 0, 1)')
 
     const [palette, setPalette] = useState<PaletteColor[]>([
         { offset: 0, color: '#000' },
@@ -57,8 +58,10 @@ export default () => {
                 <ColorPicker
                     color={color}
                     onChange={(val) => {
-                        console.log(val)
-                        setColor(val.color)
+                        const nextColor = Color(val.color)
+                            .alpha(val.alpha / 100)
+                            .string()
+                        setColor(nextColor)
                     }}
                 />
             </div>
