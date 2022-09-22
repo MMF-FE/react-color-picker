@@ -1,6 +1,109 @@
 .colorPicker {
-    /* color: red; */
+    width: 100%;
+    border-radius: 0;
 }
-.colorPicker :global(.sketch-picker) {
-    /* box-shadow: none; */
+
+.colorPicker :global(.rc-color-picker-panel-inner) {
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
 }
+
+.colorPicker :global(.rc-color-picker-panel-board) {
+    margin: 0;
+}
+
+.colorPicker :global(.rc-color-picker-panel-board-handler) {
+    box-shadow: none;
+}
+
+.colorPicker :global(.rc-color-picker-panel-board-hsv) {
+    width: 100%;
+    height: 150px;
+}
+
+.colorPicker :global(.rc-color-picker-panel-wrap-ribbon),
+.colorPicker :global(.rc-color-picker-panel-wrap-alpha) {
+    left: 0;
+    right: initial;
+    width: calc(100% - 30px - 8px);
+    /* border-radius: 2em;
+    overflow: hidden; */
+}
+
+.colorPicker :global(.rc-color-picker-panel-alpha-handler) {
+    left: initial;
+    /* width: calc(100% + 12px); */
+}
+
+.colorPicker :global(.rc-color-picker-panel-wrap) {
+    margin-top: 8px !important;
+}
+
+.colorPicker :global(.rc-color-picker-panel-wrap-preview) {
+    right: 0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.colorPicker :global(.rc-color-picker-panel-alpha-bg) {
+    /* width: calc(100% + 12px); */
+}
+
+.colorPicker :global(.rc-color-picker-panel-alpha) span {
+    /* width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    border-radius: 50%;
+    border: 1px solid #888; */
+}
+
+.colorPicker :global(.rc-color-picker-panel-preview) span {
+    /* width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    border-radius: 50%;
+    border: 1px solid #888; */
+}
+
+.colorPicker :global(.rc-color-picker-panel-preview) input[type='color'] {
+    border: 0;
+    padding: 0;
+}
+
+.colorPicker :global(.rc-color-picker-panel-params-input) {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.colorPicker :global(.rc-color-picker-panel-params) input {
+    float: initial;
+    margin: 0;
+    border: 1px solid #d2d5dc;
+    font-size: 14px;
+    height: 30px;
+    outline: none;
+}
+
+.colorPicker :global(.rc-color-picker-panel-params-hex) {
+    width: 62px;
+}
+
+.colorPicker :global(.rc-color-picker-panel-params-lable) {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    line-height: 22px;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.colorPicker :global(.rc-color-picker-panel-params-lable) label {
+    margin: 0;
+}
+
+/* .rc-color-picker-panel-params-has-alpha input[type=number] */
+
+/* .rc-color-picker-panel-params input */
+/* .rc-color-picker-panel-preview input[type='color']; */

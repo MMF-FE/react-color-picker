@@ -12,9 +12,18 @@ export default () => {
     const [color, setColor] = useState({ color: '#555', alpha: 100 })
 
     const [palette, setPalette] = useState<PaletteColor[]>([
-        { offset: 0, color: '#000' },
-        { offset: 0.4, color: '#555' },
-        { offset: 1, color: '#999' },
+        {
+            color: '#ff0000',
+            opacity: 1,
+            active: false,
+            offset: 0,
+        },
+        {
+            color: '#000bff',
+            active: true,
+            opacity: 1,
+            offset: 1,
+        },
     ])
 
     const [angle, setAngle] = useState(0)

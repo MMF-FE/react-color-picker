@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Panel, PanelProps } from 'rc-color-picker'
 import EyeDropper from '../EyeDropper'
 import 'rc-color-picker/assets/index.css'
@@ -9,21 +9,24 @@ import styles from './style.module.css'
 export interface ColorPickerProps extends PanelProps {}
 
 const ColorPicker: React.FC<ColorPickerProps> = (props) => {
+    const { width = 200 } = props
+
     return (
-        <div>
+        <>
             <Panel
                 {...props}
+                style={{ ...props?.style, width }}
+                className={classnames(styles.colorPicker, props.className)}
                 onChange={(val) => {
                     props.onChange?.(val)
                 }}
             ></Panel>
             <EyeDropper
                 onPick={(val) => {
-                    console.log(props)
                     props.onChange?.({ color: val, alpha: props.alpha || 100 })
                 }}
             ></EyeDropper>
-        </div>
+        </>
     )
 }
 

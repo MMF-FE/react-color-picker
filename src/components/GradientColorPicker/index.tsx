@@ -20,6 +20,7 @@ export interface GradientColorPickerProps extends GradientPickerProps {
 }
 
 export interface WrappedColorPickerProps {
+    width?: number
     color: string
     opacity?: number
     onSelect: (color: string, alpha: number) => void
@@ -29,7 +30,7 @@ const WrappedColorPicker: React.FC<WrappedColorPickerProps> = (props) => {
     const alpha = useMemo(() => {
         const color = Color(props.color)
 
-        if (props.opacity) {
+        if (props.opacity !== undefined) {
             return props.opacity * 100
         }
 
@@ -38,6 +39,7 @@ const WrappedColorPicker: React.FC<WrappedColorPickerProps> = (props) => {
 
     return (
         <ColorPicker
+            width={props.width}
             color={props.color}
             alpha={alpha}
             onChange={(val) => {
@@ -48,7 +50,13 @@ const WrappedColorPicker: React.FC<WrappedColorPickerProps> = (props) => {
 }
 
 const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
-    const { palette, angle, onAngleChange, onPaletteChange } = props
+    const {
+        width = 220,
+        palette,
+        angle,
+        onAngleChange,
+        onPaletteChange,
+    } = props
 
     const [edit, setEdit] = useState(false)
 
@@ -116,16 +124,21 @@ const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
     )
 
     return (
-        <div>
-            <GradientPicker {...props}>
+        <div className={styles.gradientColorPicker} style={{ width }}>
+            <GradientPicker {...{ ...props, width, paletteHeight: 30 }}>
                 {/* @ts-ignore */}
-                <WrappedColorPicker></WrappedColorPicker>
+                <WrappedColorPicker width={width}></WrappedColorPicker>
             </GradientPicker>
 
             <div className={styles.angleHolder}>
-                <AnglePicker size={40} angle={angle} setAngle={onAngleChange} />
+                <AnglePicker size={30} angle={angle} setAngle={onAngleChange} />
                 <div className={styles.angleInputs}>
-                    <span onClick={() => onAngleChange(angle - 1)}>
+                    <span
+                        onClick={() => {
+                            if (angle === 0) return
+                            onAngleChange(angle - 1)
+                        }}
+                    >
                         &#8722;
                     </span>
                     <input
@@ -133,7 +146,14 @@ const GradientColorPicker: React.FC<GradientColorPickerProps> = (props) => {
                         value={angle}
                         onChange={handleAngleInputChange}
                     />
-                    <span onClick={() => onAngleChange(angle + 1)}>&#43;</span>
+                    <span
+                        onClick={() => {
+                            if (angle === 360) return
+                            onAngleChange(angle + 1)
+                        }}
+                    >
+                        &#43;
+                    </span>
                 </div>
             </div>
 

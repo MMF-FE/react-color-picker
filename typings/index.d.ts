@@ -6,6 +6,8 @@ declare module 'rc-color-picker' {
         alpha: number
     }
     export interface PanelProps {
+        // 宽度
+        width?: number
         // 透明度 默认值100
         alpha?: number
         // 样式类名
